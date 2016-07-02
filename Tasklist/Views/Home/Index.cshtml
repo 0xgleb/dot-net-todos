@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Index";
+    var Tasks = ViewBag.Tasks; 
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Tasklist</title>
+        <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    </head>
+    <body>
+        @{ 
+            using(Html.BeginForm("AddTask", "Home")) 
+            {
+                @:<input type="text" name="task" placeholder="New task..." />
+                @:<input type="submit" value="Add"/>
+            }
+        }    
+            <ul>
+            @foreach(var task in Tasks)
+            { 
+                 <li>@task</li>
+            }
+            </ul>
+         
+        <script src="~/Scripts/MicrosoftAjax.js" type="text/javascript"></script>
+        <script src="~/Scripts/MicrosoftMvcValidation.js" type="text/javascript"></script>
+        <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    </body>
+</html>
