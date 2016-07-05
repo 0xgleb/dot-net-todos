@@ -24,7 +24,6 @@ namespace Tasklist.Controllers
         }
 
         [HttpPost]
-        //public ActionResult Index(TaskTable newTask)
         public string Index(TaskTable newTask)
         {
             newTask.Task = newTask.Task.Shorten();
