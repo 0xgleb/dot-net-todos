@@ -24,19 +24,21 @@ namespace Tasklist.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(TaskTable newTask)
+        //public ActionResult Index(TaskTable newTask)
+        public string Index(TaskTable newTask)
         {
-           newTask.Task = newTask.Task.Shorten();
+            newTask.Task = newTask.Task.Shorten();
 
-           if(ModelState.IsValid && newTask.Task != "")
-           {
-               newTask.IsActive = true;
-               Tasklist.Add(newTask.Task);
-               db.TaskTables.Add(newTask);
-               db.SaveChanges();
-           }
+            if(ModelState.IsValid && newTask.Task != "")
+            {
+                newTask.IsActive = true;
+                Tasklist.Add(newTask.Task);
+                db.TaskTables.Add(newTask);
+                db.SaveChanges();
+                return "Success! [serverside]";
+            }
 
-           return RedirectToAction("Index");
+            return "Error! [serverside]";
         }
     }
 }
