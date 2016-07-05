@@ -131,23 +131,23 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tasks.Context.cs">
+    <Compile Include="Models\TasksModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Tasks.Context.tt</DependentUpon>
+      <DependentUpon>TasksModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tasks.cs">
+    <Compile Include="Models\TasksModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Tasks.tt</DependentUpon>
+      <DependentUpon>TasksModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tasks.Designer.cs">
+    <Compile Include="Models\TasksModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Tasks.edmx</DependentUpon>
+      <DependentUpon>TasksModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\TaskTable.cs">
-      <DependentUpon>Tasks.tt</DependentUpon>
+      <DependentUpon>TasksModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TaskTableMetadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -157,22 +157,22 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Global.asax" />
-    <EntityDeploy Include="Models\Tasks.edmx">
+    <EntityDeploy Include="Models\TasksModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Tasks.Designer.cs</LastGenOutput>
+      <LastGenOutput>TasksModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Tasks.Context.tt">
+    <Content Include="Models\TasksModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Tasks.edmx</DependentUpon>
-      <LastGenOutput>Tasks.Context.cs</LastGenOutput>
+      <DependentUpon>TasksModel.edmx</DependentUpon>
+      <LastGenOutput>TasksModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Tasks.edmx.diagram">
-      <DependentUpon>Tasks.edmx</DependentUpon>
+    <Content Include="Models\TasksModel.edmx.diagram">
+      <DependentUpon>TasksModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\Tasks.tt">
+    <Content Include="Models\TasksModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Tasks.edmx</DependentUpon>
-      <LastGenOutput>Tasks.cs</LastGenOutput>
+      <DependentUpon>TasksModel.edmx</DependentUpon>
+      <LastGenOutput>TasksModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />

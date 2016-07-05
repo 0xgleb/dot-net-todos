@@ -16,8 +16,6 @@ namespace Tasklist.Controllers
                                                 select x.Task).ToList<string>();
 
 
-        private static int id = Tasklist.ToArray().Length;
-
         [HttpGet]
         public ActionResult Index()
         {
@@ -32,10 +30,8 @@ namespace Tasklist.Controllers
 
            if(ModelState.IsValid && newTask.Task != "")
            {
-               id++;
                newTask.IsActive = true;
                Tasklist.Add(newTask.Task);
-               newTask.Id = id;
                db.TaskTables.Add(newTask);
                db.SaveChanges();
            }
