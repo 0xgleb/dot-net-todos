@@ -11,14 +11,16 @@ namespace Tasklist.Controllers
 {
     public class HomeController : Controller
     {
-        private static TasksEntities db = new TasksEntities(); 
+        private static TasksEntities db = new TasksEntities();
+        private static List<string> Tasklist = (from x in db.TaskTables
+                                                select x.Task).ToList<string>();
+
+
+        private static int id = Tasklist.ToArray().Length;
 
         [HttpGet]
         public ActionResult Index()
         {
-            var Tasklist = (from x in db.TaskTables
-                           select x.Task).ToList<string>();
-
             ViewBag.Tasks = Tasklist;
             return View();
         }
@@ -26,26 +28,19 @@ namespace Tasklist.Controllers
         [HttpPost]
         public ActionResult Index(TaskTable newTask)
         {
-            //var form = Request.Form;
+           newTask.Task = newTask.Task.Shorten();
 
-            //TaskTable newTask = new TaskTable();
+           if(ModelState.IsValid && newTask.Task != "")
+           {
+               id++;
+               newTask.IsActive = true;
+               Tasklist.Add(newTask.Task);
+               newTask.Id = id;
+               db.TaskTables.Add(newTask);
+               db.SaveChanges();
+           }
 
-            //newTask.Task = (@form["task"]).Shorten();
-            //newTask.IsActive = true;
-
-            //if (newTask.Task != "")
-            if(ModelState.IsValid)
-            {
-                newTask.IsActive = true;
-                newTask.Task = newTask.Task.Shorten();
-                // TODO: Set id somehow!!!
-                db.TaskTables.Add(newTask);
-                db.SaveChanges();
-
-                return RedirectToAction("Index");
-            }
-            else
-                return Redirect("Index");
+           return RedirectToAction("Index");
         }
     }
 }
