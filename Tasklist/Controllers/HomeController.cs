@@ -9,9 +9,7 @@ namespace Tasklist.Controllers
 {
     public class HomeController : Controller
     {
-        // TODO: connect a db
-        public static TasksEntities db = new TasksEntities(); // TODO: create a model
-
+        public static TasksEntities db = new TasksEntities(); 
         // public static List<string> Tasks = new List<string>();
 
         public ActionResult Index()
