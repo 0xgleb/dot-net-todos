@@ -31,3 +31,5 @@ C:\Users\gleb.dianov\Documents\Tasklist\Tasklist\bin\System.Web.Optimization.dll
 C:\Users\gleb.dianov\Documents\Tasklist\Tasklist\bin\WebGrease.dll
 C:\Users\gleb.dianov\Documents\Tasklist\Tasklist\bin\Antlr3.Runtime.pdb
 C:\Users\gleb.dianov\Documents\Tasklist\Tasklist\bin\System.Web.Optimization.xml
+C:\Users\gleb.dianov\documents\TaskList\Tasklist\bin\EntityFramework.dll
+C:\Users\gleb.dianov\documents\TaskList\Tasklist\bin\EntityFramework.xml

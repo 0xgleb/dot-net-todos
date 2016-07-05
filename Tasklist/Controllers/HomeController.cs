@@ -9,14 +9,13 @@ namespace Tasklist.Controllers
 {
     public class HomeController : Controller
     {
-        public static TasksEntities db = new TasksEntities(); 
+        private static TasksEntities db = new TasksEntities(); 
         // public static List<string> Tasks = new List<string>();
 
         public ActionResult Index()
         {
-            var Tasklist = from x in db.TaskTables
-                           where x.Task != ""
-                           select x.Task;
+            var Tasklist = (from x in db.TaskTables
+                           select x.Task).ToList<string>();
 
             ViewBag.Tasks = Tasklist;
             return View();
@@ -26,10 +25,31 @@ namespace Tasklist.Controllers
         {
             var form = Request.Form;
 
-            //if (!string.IsNullOrEmpty(form["task"]))
-                //db.(@form["task"]);
+            TaskTable newTask = new TaskTable();
+
+            newTask.Task = (@form["task"]).Shorten();
+
+            if (newTask.Task != "")
+                db.TaskTables.Add(newTask);
 
             return Redirect("Index");
+        }
+    }
+
+    public static class StringExtensions
+    {
+        public static string Shorten(this string entered)
+        {
+            if (entered == null)
+                return "";
+
+            string[] wordsArray= entered.Split(' ');
+
+            var shorten = wordsArray[0];
+            for (int i = 1, length = wordsArray.Length; i < length; i++)
+                entered += " " + wordsArray[i];
+
+            return entered;
         }
     }
 }
