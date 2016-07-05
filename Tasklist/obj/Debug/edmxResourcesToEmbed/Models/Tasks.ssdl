@@ -6,6 +6,7 @@
     </Key>
     <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="Task" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
   <EntityContainer Name="TasksModelStoreContainer">
     <EntitySet Name="TaskTable" EntityType="Self.TaskTable" Schema="dbo" store:Type="Tables" />

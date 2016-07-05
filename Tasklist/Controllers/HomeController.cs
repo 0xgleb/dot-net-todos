@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,8 +11,8 @@ namespace Tasklist.Controllers
     public class HomeController : Controller
     {
         private static TasksEntities db = new TasksEntities(); 
-        // public static List<string> Tasks = new List<string>();
 
+        [HttpGet]
         public ActionResult Index()
         {
             var Tasklist = (from x in db.TaskTables
@@ -21,18 +22,27 @@ namespace Tasklist.Controllers
             return View();
         }
 
-        public ActionResult AddTask()
+        [HttpPost]
+        public ActionResult Index(TaskTable newTask)
         {
-            var form = Request.Form;
+            //var form = Request.Form;
 
-            TaskTable newTask = new TaskTable();
+            //TaskTable newTask = new TaskTable();
 
-            newTask.Task = (@form["task"]).Shorten();
+            //newTask.Task = (@form["task"]).Shorten();
+            //newTask.IsActive = true;
 
-            if (newTask.Task != "")
+            //if (newTask.Task != "")
+            if(ModelState.IsValid)
+            {
+                newTask.IsActive = true;
                 db.TaskTables.Add(newTask);
+                db.SaveChanges();
 
-            return Redirect("Index");
+                return RedirectToAction("Index");
+            }
+            else
+                return Redirect("Index");
         }
     }
 

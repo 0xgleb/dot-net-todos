@@ -16,7 +16,7 @@ namespace Tasklist.Models
     public partial class TasksEntities : DbContext
     {
         public TasksEntities()
-            : base("name=TasksEntities")
+            : base("name=TasksEntities1")
         {
         }
     

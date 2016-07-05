@@ -6,8 +6,9 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" />
     <Property Name="Task" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" Nullable="false" />
   </EntityType>
-  <EntityContainer Name="TasksEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="TasksEntities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="TaskTables" EntityType="Self.TaskTable" />
   </EntityContainer>
 </Schema>

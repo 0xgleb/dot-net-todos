@@ -11,6 +11,7 @@
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="Task" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityContainer Name="TasksModelStoreContainer">
           <EntitySet Name="TaskTable" EntityType="Self.TaskTable" Schema="dbo" store:Type="Tables" />
@@ -26,8 +27,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Task" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="TasksEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="TasksEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TaskTables" EntityType="Self.TaskTable" />
         </EntityContainer>
       </Schema>
@@ -35,12 +37,13 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TasksModelStoreContainer" CdmEntityContainer="TasksEntities">
+        <EntityContainerMapping StorageEntityContainer="TasksModelStoreContainer" CdmEntityContainer="TasksEntities1">
           <EntitySetMapping Name="TaskTables">
             <EntityTypeMapping TypeName="TasksModel.TaskTable">
               <MappingFragment StoreEntitySet="TaskTable">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Task" ColumnName="Task" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -16,5 +16,6 @@ namespace Tasklist.Models
     {
         public int Id { get; set; }
         public string Task { get; set; }
+        public bool IsActive { get; set; }
     }
 }

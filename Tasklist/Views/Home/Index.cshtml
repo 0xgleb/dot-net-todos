@@ -1,28 +1,42 @@
-﻿@{
+﻿@model Tasklist.Models.TaskTable
+
+@{
     ViewBag.Title = "Index";
     var Tasks = ViewBag.Tasks; 
 }
 
-<!DOCTYPE html>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
 
-<html>
-    <head>
-        <title>Tasklist</title>
-    </head>
-    <body>
-        @{ 
-            using(Html.BeginForm("AddTask", "Home")) 
-            {
-                @:<input type="text" name="task" placeholder="New task..." />
-                @:<input type="submit" value="Add"/>
-            }
-        }    
-            <ul>
-            @foreach(var task in Tasks)
-            { 
-                 <li>@task</li>
-            }
-            </ul>
-         
-    </body>
-</html>
+    <fieldset>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Task)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Task)
+            @Html.ValidationMessageFor(model => model.Task)
+        </div>
+
+        <input type="submit" value="Add" />
+
+        @*<div class="editor-label">
+            @Html.LabelFor(model => model.IsActive)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsActive)
+            @Html.ValidationMessageFor(model => model.IsActive)
+        </div>*@
+    </fieldset>
+}
+<ul>
+    @foreach (var task in Tasks)
+    {
+        <li>@task</li>
+    }
+</ul>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
