@@ -14,11 +14,11 @@ namespace Extensions
 
             string[] wordsArray = entered.Split(' ');
 
-            var shorten = wordsArray[0];
+            string shorten = wordsArray[0];
             for (int i = 1, length = wordsArray.Length; i < length; i++)
-                entered += " " + wordsArray[i];
+                shorten += " " + wordsArray[i];
 
-            return entered;
+            return shorten;
         }
     }
 }
