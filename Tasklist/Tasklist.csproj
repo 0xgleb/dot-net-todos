@@ -126,6 +126,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\StringExtensions.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -148,6 +149,7 @@
     <Compile Include="Models\TaskTable.cs">
       <DependentUpon>Tasks.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TaskTableMetadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

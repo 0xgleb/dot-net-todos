@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Tasklist.Models;
+using Extensions;
 
 namespace Tasklist.Controllers
 {
@@ -36,6 +37,8 @@ namespace Tasklist.Controllers
             if(ModelState.IsValid)
             {
                 newTask.IsActive = true;
+                newTask.Task = newTask.Task.Shorten();
+                // TODO: Set id somehow!!!
                 db.TaskTables.Add(newTask);
                 db.SaveChanges();
 
@@ -43,23 +46,6 @@ namespace Tasklist.Controllers
             }
             else
                 return Redirect("Index");
-        }
-    }
-
-    public static class StringExtensions
-    {
-        public static string Shorten(this string entered)
-        {
-            if (entered == null)
-                return "";
-
-            string[] wordsArray= entered.Split(' ');
-
-            var shorten = wordsArray[0];
-            for (int i = 1, length = wordsArray.Length; i < length; i++)
-                entered += " " + wordsArray[i];
-
-            return entered;
         }
     }
 }
