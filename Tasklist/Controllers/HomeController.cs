@@ -55,8 +55,15 @@ namespace Tasklist.Controllers
         }
 
         /*[HttpPost]
-        public int Change(int j)
+        public int Change(TaskTable changedTask)
         {
+            changedTask.Task = changedTask.Task.Shorten();
+
+            if(ModelState.IsValid && changedTask.Task != "")
+            {
+                Tasklist.Find(x => x.Id == changedTask.Id);
+                return 1;
+            }
             return -1;
         }*/
     }

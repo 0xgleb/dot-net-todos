@@ -9,13 +9,8 @@
         data: $(this).serialize(),
         beforeSend: function() {},
         success: function(response) {
-          var errors, resp;
-          console.log(response);
-          resp = response;
-          if (response === -1) {
-            errors = true;
-          }
-          if (response !== -1) {
+          console.log(parseInt(response));
+          if (parseInt(response !== -1)) {
             return $('ul').append("<li data-id='" + response + "'><input type='checkbox' /><span>" + input + "</span>  <button>Remove</button></li>");
           } else {
             return alert("Error!");
@@ -23,8 +18,6 @@
         },
         timeout: 3000,
         error: function(request, errorType, errorMessage) {
-          var errors;
-          errors = true;
           return console.log("Error " + errorType + " with message: " + errorMessage + " [clientside]");
         },
         complete: function() {
@@ -42,7 +35,7 @@
         beforeSend: function() {},
         success: function(response) {
           console.log(response);
-          if (response !== -1) {
+          if (parseInt(response !== -1)) {
             return console.log(this);
           } else {
             return alert("Error!");
@@ -50,8 +43,6 @@
         },
         timeout: 3000,
         error: function(request, errorType, errorMessage) {
-          var errors;
-          errors = true;
           return console.log("Error " + errorType + " with message: " + errorMessage + " [clientside]");
         },
         complete: function() {
@@ -78,6 +69,8 @@
     change: {
       submit: function(event) {
         var errors;
+        console.log($(this).serialize());
+        console.log($(this).serialize().task);
         event.preventDefault();
         errors = false;
         return ajax.change($(this).data("data-id"));
@@ -86,7 +79,7 @@
         var html, value;
         value = $(this).html();
         console.log($(this));
-        html = "<form id='changing'><input type='text' value='" + value + "' autofocus/></form>";
+        html = "<form id='changing'><input name='task' type='text' value='" + value + "' autofocus/></form>";
         console.log(html);
         $(this).html(html);
         $(this).children('input').first().focus();
@@ -97,8 +90,8 @@
 
   $(document).on('ready', function() {
     $('#Task').focus();
-    $('form').attr('autocomplete', 'off').attr('action', '/Home/Add');
-    $('form').on('submit', event.add.submit);
+    $('form').attr('autocomplete', 'off');
+    $('form').first().on('submit', event.add.submit);
     $('li span').on('dblclick', event.change.dblclick);
     return $('#changing').on('submit', event.change.submit);
   });

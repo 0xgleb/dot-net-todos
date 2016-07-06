@@ -5,16 +5,13 @@ ajax =
       data: $(@).serialize()
       beforeSend: ->
       success: (response) ->
-        console.log response
-        resp = response
-        errors = true if response == -1
-        if response != -1
+        console.log parseInt response
+        if parseInt response != -1
           $('ul').append "<li data-id='#{response}'><input type='checkbox' /><span>#{input}</span>  <button>Remove</button></li>"
         else
           alert "Error!"
       timeout: 3000,
       error: (request, errorType, errorMessage) ->
-        errors = true
         console.log "Error #{errorType} with message: #{errorMessage} [clientside]"
       complete: ->
         console.log "Loading finished! [clientside]"
@@ -28,13 +25,12 @@ ajax =
       beforeSend: ->
       success: (response) ->
         console.log response
-        if response != -1
+        if parseInt response != -1
           console.log @
         else
           alert "Error!"
       timeout: 3000
       error: (request, errorType, errorMessage) ->
-        errors = true
         console.log "Error #{errorType} with message: #{errorMessage} [clientside]"
       complete: ->
         console.log "Loading finished! [clientside]"
@@ -53,13 +49,15 @@ event =
       ajax.add input
   change:
     submit: (event) ->
+      console.log $(@).serialize()
+      console.log $(@).serialize().task
       event.preventDefault()
       errors = false
       ajax.change $(@).data("data-id")
     dblclick: ->
       value = $(@).html()
       console.log $ @
-      html = "<form id='changing'><input type='text' value='#{value}' autofocus/></form>"
+      html = "<form id='changing'><input name='task' type='text' value='#{value}' autofocus/></form>"
       console.log html
       $(@).html html
       $(@).children('input').first().focus()
@@ -68,9 +66,8 @@ event =
 $(document).on 'ready', ->
   $('#Task').focus()
   $('form').attr 'autocomplete', 'off'
-  .attr 'action', '/Home/Add'
 
-  $('form').on 'submit', event.add.submit
+  $('form').first().on 'submit', event.add.submit
 
   $('li span').on 'dblclick', event.change.dblclick
 
