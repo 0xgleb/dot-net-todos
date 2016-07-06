@@ -3,60 +3,104 @@
   var ajax, event;
 
   ajax = {
-    add: function(errors, input, resp) {
-      return $.ajax('/Home/Index', {
+    add: function(input) {
+      return $.ajax('/Home/Add', {
         type: "POST",
-        data: $('form').serialize(),
+        data: $(this).serialize(),
         beforeSend: function() {},
         success: function(response) {
+          var errors, resp;
           console.log(response);
           resp = response;
           if (response === -1) {
-            return errors = true;
+            errors = true;
+          }
+          if (response !== -1) {
+            return $('ul').append("<li data-id='" + response + "'><input type='checkbox' /><span>" + input + "</span>  <button>Remove</button></li>");
+          } else {
+            return alert("Error!");
           }
         },
         timeout: 3000,
         error: function(request, errorType, errorMessage) {
+          var errors;
           errors = true;
           return console.log("Error " + errorType + " with message: " + errorMessage + " [clientside]");
         },
         complete: function() {
-          console.log("Loading finished! [clientside]");
-          if (!errors) {
-            return $('ul').append("<li data-id='" + resp + "'><input type='checkbox' /><span>" + input + "</span>  <button>Remove</button></li>");
-          } else {
-            return alert("Error!");
-          }
+          return console.log("Loading finished! [clientside]");
         }
       });
     },
-    change: function(id) {},
-    remove: function() {}
+    change: function(id) {
+      return $.ajax('/Home/Change', {
+        type: "POST",
+        data: {
+          id: id,
+          form: $(this).serialize()
+        },
+        beforeSend: function() {},
+        success: function(response) {
+          console.log(response);
+          if (response !== -1) {
+            return console.log(this);
+          } else {
+            return alert("Error!");
+          }
+        },
+        timeout: 3000,
+        error: function(request, errorType, errorMessage) {
+          var errors;
+          errors = true;
+          return console.log("Error " + errorType + " with message: " + errorMessage + " [clientside]");
+        },
+        complete: function() {
+          return console.log("Loading finished! [clientside]");
+        }
+      });
+    },
+    remove: function(id) {
+      return console.log('test');
+    }
   };
 
   event = {
-    submit: function(event) {
-      var errors, input, response;
-      event.preventDefault();
-      input = $('.editor-field input').val();
-      console.log(input + " (input) [clientside]");
-      errors = false;
-      response = null;
-      return ajax.add(errors, input, response);
+    add: {
+      sumbit: function(event) {
+        var errors, input;
+        event.preventDefault();
+        input = $('.editor-field input').val();
+        console.log(input + " (input) [clientside]");
+        errors = false;
+        return ajax.add(input);
+      }
     },
-    dblclick: function() {
-      var value;
-      value = $(this).children('span').first();
-      value.html("<input type=text value=" + (value.html()) + " autofocus/>");
-      return console.log(this.attr("data-id"));
+    change: {
+      sumbit: function(event) {
+        var errors;
+        event.preventDefault();
+        errors = false;
+        return ajax.change($(this).data("data-id"));
+      },
+      dblclick: function() {
+        var html, value;
+        value = $(this).html();
+        console.log($(this));
+        html = "<form id='changing'><input type='text' value='" + value + "' autofocus/></form>";
+        console.log(html);
+        $(this).html(html);
+        $(this).children('input').first().focus();
+        return console.log('ID: ' + $(this).data("id"));
+      }
     }
   };
 
   $(document).on('ready', function() {
     $('#Task').focus();
-    $('form').attr('autocomplete', 'off');
-    $('form').on('submit', event.submit);
-    return $('li').on('dblclick', event.dblclick);
+    $('form').attr('autocomplete', 'off').attr('action', '/Home/Add');
+    $('form').on('submit', event.add.submit);
+    $('li span').on('dblclick', event.change.dblclick);
+    return $('#changing').on('submit', event.change.submit);
   });
 
 }).call(this);

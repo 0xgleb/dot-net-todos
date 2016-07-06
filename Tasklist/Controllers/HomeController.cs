@@ -38,7 +38,7 @@ namespace Tasklist.Controllers
         }
 
         [HttpPost]
-        public int Index(TaskTable newTask)
+        public int Add(TaskTable newTask)
         {
             newTask.Task = newTask.Task.Shorten();
 
@@ -53,5 +53,11 @@ namespace Tasklist.Controllers
 
             return -1;
         }
+
+        /*[HttpPost]
+        public int Change(int j)
+        {
+            return -1;
+        }*/
     }
 }
