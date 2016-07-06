@@ -2,11 +2,12 @@ ajax =
   add: (input)->
     $.ajax '/Home/Add',
       type: "POST"
-      data: $(@).serialize()
+      data: $('form').serialize()
       beforeSend: ->
       success: (response) ->
-        console.log parseInt response
-        if parseInt response != -1
+        response = parseInt response
+        console.log response
+        if response != -1
           $('ul').append "<li data-id='#{response}'><input type='checkbox' /><span>#{input}</span>  <button>Remove</button></li>"
         else
           alert "Error!"
@@ -43,16 +44,10 @@ event =
   add:
     submit: (event) ->
       event.preventDefault()
-      input = $('.editor-field input').val()
-      console.log "#{input} (input) [clientside]"
-      errors = false
-      ajax.add input
+      ajax.add $('.editor-field input').val()
   change:
     submit: (event) ->
-      console.log $(@).serialize()
-      console.log $(@).serialize().task
       event.preventDefault()
-      errors = false
       ajax.change $(@).data("data-id")
     dblclick: ->
       value = $(@).html()

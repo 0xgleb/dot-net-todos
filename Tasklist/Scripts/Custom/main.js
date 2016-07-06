@@ -6,11 +6,12 @@
     add: function(input) {
       return $.ajax('/Home/Add', {
         type: "POST",
-        data: $(this).serialize(),
+        data: $('form').serialize(),
         beforeSend: function() {},
         success: function(response) {
-          console.log(parseInt(response));
-          if (parseInt(response !== -1)) {
+          response = parseInt(response);
+          console.log(response);
+          if (response !== -1) {
             return $('ul').append("<li data-id='" + response + "'><input type='checkbox' /><span>" + input + "</span>  <button>Remove</button></li>");
           } else {
             return alert("Error!");
@@ -58,21 +59,13 @@
   event = {
     add: {
       submit: function(event) {
-        var errors, input;
         event.preventDefault();
-        input = $('.editor-field input').val();
-        console.log(input + " (input) [clientside]");
-        errors = false;
-        return ajax.add(input);
+        return ajax.add($('.editor-field input').val());
       }
     },
     change: {
       submit: function(event) {
-        var errors;
-        console.log($(this).serialize());
-        console.log($(this).serialize().task);
         event.preventDefault();
-        errors = false;
         return ajax.change($(this).data("data-id"));
       },
       dblclick: function() {

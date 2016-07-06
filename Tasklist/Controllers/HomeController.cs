@@ -11,24 +11,9 @@ namespace Tasklist.Controllers
 {
     public class HomeController : Controller
     {
-        struct Task
-        {
-            public int id;
-            public string task;
-            public bool isActive;
-
-            public Task(int id, string task, bool isActive)
-            {
-                this.id = id;
-                this.task = task;
-                this.isActive = isActive;
-            }
-        };
-
         private static TasksEntities db = new TasksEntities();
         private static List<TaskTable> Tasklist = (from x in db.TaskTables
                                                 select x).ToList<TaskTable>();
-
 
         [HttpGet]
         public ActionResult Index()
