@@ -11,9 +11,23 @@ namespace Tasklist.Controllers
 {
     public class HomeController : Controller
     {
+        struct Task
+        {
+            public int id;
+            public string task;
+            public bool isActive;
+
+            public Task(int id, string task, bool isActive)
+            {
+                this.id = id;
+                this.task = task;
+                this.isActive = isActive;
+            }
+        };
+
         private static TasksEntities db = new TasksEntities();
-        private static List<string> Tasklist = (from x in db.TaskTables
-                                                select x.Task).ToList<string>();
+        private static List<TaskTable> Tasklist = (from x in db.TaskTables
+                                                select x).ToList<TaskTable>();
 
 
         [HttpGet]
@@ -31,7 +45,7 @@ namespace Tasklist.Controllers
             if(ModelState.IsValid && newTask.Task != "")
             {
                 newTask.IsActive = true;
-                Tasklist.Add(newTask.Task);
+                Tasklist.Add(newTask);
                 db.TaskTables.Add(newTask);
                 db.SaveChanges();
                 return "Success! [serverside]";

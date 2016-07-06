@@ -24,7 +24,7 @@
 <ul>
     @foreach (var task in Tasks)
     {
-        <li>@task</li>
+        <li data-id="@task.Id"><input type="checkbox" /><span>@task.Task</span> (id: @task.Id) <button>Remove</button></li>
     }
 </ul>
 

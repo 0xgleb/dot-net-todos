@@ -21,3 +21,10 @@ $(document).on 'ready', ->
           $('ul').append "<li>#{input}</li>"
         else
           alert "Error!"
+  $('li').on 'dblclick', ->
+    console.log @
+    console.log typeof @
+    value = $(@).children('span').first()
+    console.log value.html()
+    console.log value
+    value.html("<input type=text value=#{value.html()}")
