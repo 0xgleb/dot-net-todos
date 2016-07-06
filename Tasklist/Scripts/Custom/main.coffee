@@ -45,14 +45,14 @@ ajax =
 
 event =
   add:
-    sumbit: (event) ->
+    submit: (event) ->
       event.preventDefault()
       input = $('.editor-field input').val()
       console.log "#{input} (input) [clientside]"
       errors = false
       ajax.add input
   change:
-    sumbit: (event) ->
+    submit: (event) ->
       event.preventDefault()
       errors = false
       ajax.change $(@).data("data-id")

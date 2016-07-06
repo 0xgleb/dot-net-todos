@@ -66,7 +66,7 @@
 
   event = {
     add: {
-      sumbit: function(event) {
+      submit: function(event) {
         var errors, input;
         event.preventDefault();
         input = $('.editor-field input').val();
@@ -76,7 +76,7 @@
       }
     },
     change: {
-      sumbit: function(event) {
+      submit: function(event) {
         var errors;
         event.preventDefault();
         errors = false;
