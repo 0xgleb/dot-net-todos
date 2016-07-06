@@ -38,7 +38,7 @@ namespace Tasklist.Controllers
         }
 
         [HttpPost]
-        public string Index(TaskTable newTask)
+        public int Index(TaskTable newTask)
         {
             newTask.Task = newTask.Task.Shorten();
 
@@ -48,10 +48,10 @@ namespace Tasklist.Controllers
                 Tasklist.Add(newTask);
                 db.TaskTables.Add(newTask);
                 db.SaveChanges();
-                return "Success! [serverside]";
+                return newTask.Id;
             }
 
-            return "Error! [serverside]";
+            return -1;
         }
     }
 }

@@ -16,15 +16,15 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Task)
             @Html.ValidationMessageFor(model => model.Task)
+            <input type="submit" value="Add" />
         </div>
 
-        <input type="submit" value="Add" />
    </fieldset>
 }
 <ul>
     @foreach (var task in Tasks)
     {
-        <li data-id="@task.Id"><input type="checkbox" /><span>@task.Task</span> (id: @task.Id) <button>Remove</button></li>
+        <li data-id="@task.Id"><input type="checkbox" /><span>@task.Task</span>  <button>Remove</button></li>
     }
 </ul>
 
