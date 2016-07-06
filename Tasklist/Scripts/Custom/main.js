@@ -29,15 +29,18 @@
     change: function(id) {
       return $.ajax('/Home/Change', {
         type: "POST",
+        accept: 'application/json',
         data: {
           id: id,
-          form: $(this).serialize()
+          task: $(this).serializeArray()[0]
         },
         beforeSend: function() {},
         success: function(response) {
+          response = parseInt(response);
           console.log(response);
-          if (parseInt(response !== -1)) {
-            return console.log(this);
+          if (response !== -1) {
+            console.log(this);
+            return $(this).parent().html("" + ($(this).serializeArray()[0]));
           } else {
             return alert("Error!");
           }
@@ -52,7 +55,7 @@
       });
     },
     remove: function(id) {
-      return console.log('test');
+      return console.log('');
     }
   };
 
@@ -66,10 +69,12 @@
     change: {
       submit: function(event) {
         event.preventDefault();
+        console.log($(this).serializeArray()[0]);
         return ajax.change($(this).data("data-id"));
       },
-      dblclick: function() {
+      dblclick: function(event) {
         var html, value;
+        event.preventDefault();
         value = $(this).html();
         console.log($(this));
         html = "<form id='changing'><input name='task' type='text' value='" + value + "' autofocus/></form>";

@@ -39,17 +39,24 @@ namespace Tasklist.Controllers
             return -1;
         }
 
-        /*[HttpPost]
-        public int Change(TaskTable changedTask)
+        [HttpPost]
+        public int Change(ChangedTask changedTask)
         {
-            changedTask.Task = changedTask.Task.Shorten();
+            changedTask.NewTask = changedTask.NewTask.Shorten();
 
-            if(ModelState.IsValid && changedTask.Task != "")
+            if(changedTask.NewTask != "")
             {
-                Tasklist.Find(x => x.Id == changedTask.Id);
+                db.TaskTables.Find(changedTask.Id).Task = changedTask.NewTask;
+                db.SaveChanges();
                 return 1;
             }
             return -1;
-        }*/
+        }
+
+        public class ChangedTask
+        {
+            public int Id { get; set; }
+            public string NewTask { get; set; }
+        }
     }
 }

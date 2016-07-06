@@ -20,14 +20,17 @@ ajax =
   change: (id) ->
     $.ajax '/Home/Change',
       type: "POST"
+      accept: 'application/json'
       data:
         id: id
-        form: $(@).serialize()
+        task: $(@).serializeArray()[0]
       beforeSend: ->
       success: (response) ->
+        response = parseInt response
         console.log response
-        if parseInt response != -1
+        if response != -1
           console.log @
+          $(@).parent().html "#{$(@).serializeArray()[0]}"
         else
           alert "Error!"
       timeout: 3000
@@ -36,9 +39,8 @@ ajax =
       complete: ->
         console.log "Loading finished! [clientside]"
 
-
   remove: (id) ->
-    console.log 'test'
+    console.log ''
 
 event =
   add:
@@ -48,8 +50,10 @@ event =
   change:
     submit: (event) ->
       event.preventDefault()
+      console.log $(@).serializeArray()[0]
       ajax.change $(@).data("data-id")
-    dblclick: ->
+    dblclick: (event) ->
+      event.preventDefault()
       value = $(@).html()
       console.log $ @
       html = "<form id='changing'><input name='task' type='text' value='#{value}' autofocus/></form>"
