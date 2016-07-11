@@ -44,10 +44,20 @@ namespace Tasklist.Controllers
             return 1;
         }
 
-        public int Remove(int id)
+        [HttpPost]
+        public int Remove(int? id)
         {
-            db.Database.ExecuteSqlCommand("delete from TaskTable where Id=" + id);
+            if (id == null)
+                return -2;
+
+            var taskForDelete = db.TaskTables.Find(id);
+
+            if (taskForDelete == null)
+                return -1;
+
+            db.TaskTables.Remove(taskForDelete);
             db.SaveChanges();
+            Tasklist.RemoveAll(x => x.Id == id);
             return 1;
         }
 

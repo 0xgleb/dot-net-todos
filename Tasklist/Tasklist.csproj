@@ -156,7 +156,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Content Include="CustomScripts\main.js" />
     <Content Include="Global.asax" />
     <Content Include="CustomScripts\main.coffee" />
     <EntityDeploy Include="Models\TasksModel.edmx">
@@ -176,6 +175,9 @@
       <DependentUpon>TasksModel.edmx</DependentUpon>
       <LastGenOutput>TasksModel.cs</LastGenOutput>
     </Content>
+    <Content Include="CustomScripts\action.coffee" />
+    <Content Include="CustomScripts\ajax.coffee" />
+    <Content Include="CustomScripts\StringShorten.coffee" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
