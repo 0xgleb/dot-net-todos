@@ -27,12 +27,12 @@ namespace Tasklist.Controllers
         {
             newTask.Task = newTask.Task.Shorten();
 
-            if(ModelState.IsValid && newTask.Task != "")
+            if (ModelState.IsValid && newTask.Task != "")
             {
                 newTask.IsActive = true;
-                Tasklist.Add(newTask);
                 db.TaskTables.Add(newTask);
                 db.SaveChanges();
+                Tasklist.Add(newTask);
                 return newTask.Id;
             }
 

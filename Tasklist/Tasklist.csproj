@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -131,23 +132,23 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\TasksModel.Context.cs">
+    <Compile Include="Models\Task.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TasksModel.Context.tt</DependentUpon>
+      <DependentUpon>Task.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TasksModel.cs">
+    <Compile Include="Models\Task.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TasksModel.tt</DependentUpon>
+      <DependentUpon>Task.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TasksModel.Designer.cs">
+    <Compile Include="Models\Task.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>TasksModel.edmx</DependentUpon>
+      <DependentUpon>Task.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\TaskTable.cs">
-      <DependentUpon>TasksModel.tt</DependentUpon>
+      <DependentUpon>Task.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TaskTableMetadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -156,26 +157,27 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="CustomScripts\main.js" />
     <Content Include="Global.asax" />
-    <EntityDeploy Include="Models\TasksModel.edmx">
+    <Content Include="CustomScripts\main.coffee" />
+    <EntityDeploy Include="Models\Task.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TasksModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>Task.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\TasksModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TasksModel.edmx</DependentUpon>
-      <LastGenOutput>TasksModel.Context.cs</LastGenOutput>
+    <Content Include="Models\Task.edmx.diagram">
+      <DependentUpon>Task.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\TasksModel.edmx.diagram">
-      <DependentUpon>TasksModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\TasksModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TasksModel.edmx</DependentUpon>
-      <LastGenOutput>TasksModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="Scripts\Custom\main.coffee" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Models\Task.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Task.edmx</DependentUpon>
+      <LastGenOutput>Task.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Task.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Task.edmx</DependentUpon>
+      <LastGenOutput>Task.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />

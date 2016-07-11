@@ -7,7 +7,7 @@ ajax =
       success: (response) ->
         response = parseInt response
         console.log response
-        if response != -1
+        if response != -1 && response != 1
           $('ul').append "<li data-id='#{response}'><input type='checkbox' /><span>#{input}</span>  <button>Remove</button></li>"
         else
           alert "Error!"
