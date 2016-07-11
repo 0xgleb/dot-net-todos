@@ -40,17 +40,18 @@ namespace Tasklist.Controllers
         }
 
         [HttpPost]
-        public int Change(ChangedTask changedTask)
+        public string Change(ChangedTask changedTask)
         {
-            changedTask.NewTask = changedTask.NewTask.Shorten();
+            return changedTask.Id + ": " + changedTask.NewTask;
+            //changedTask.NewTask = changedTask.NewTask.Shorten();
 
-            if(changedTask.NewTask != "")
-            {
-                db.TaskTables.Find(changedTask.Id).Task = changedTask.NewTask;
-                db.SaveChanges();
-                return 1;
-            }
-            return -1;
+            //if(changedTask.NewTask != "")
+            //{
+            //    db.TaskTables.Find(changedTask.Id).Task = changedTask.NewTask;
+            //    db.SaveChanges();
+            //    return 1;
+            //}
+            //return -1;
         }
 
         public class ChangedTask
