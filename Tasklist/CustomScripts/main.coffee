@@ -1,3 +1,9 @@
+String.Prototype.shorten = ->
+  words = @split ' '
+  shorten = words[0]
+  shorten += words[i] for i in [1...words.length]
+  return shorten
+
 ajax =
   add: (input)->
     $.ajax '/Home/Add',
@@ -17,12 +23,10 @@ ajax =
       complete: ->
         console.log "Loading finished! [clientside]"
 
-  change: (id) ->
+  change: (changedTask) ->
     $.ajax '/Home/Change',
       type: "POST"
-      data:
-        id: id
-        task: $(@).serializeArray()[0]
+      data: changedTask
       beforeSend: ->
       success: (response) ->
         console.log response
@@ -46,17 +50,19 @@ action =
   add:
     submit: (event) ->
       event.preventDefault()
-      ajax.add $('.editor-field input').val()
-      $('.editor-field input').val ''
+      input = $('.editor-field input').val()
+      if input
+        ajax.add input.shorten
+        $('.editor-field input').val ''
+      else
+        alert "Error! Invalid task!"
   change:
     submit: (event) ->
       event.preventDefault()
-      console.log $(@).parent().data 'id'
-      console.log $(@).serializeArray()[0]
       changedTask =
-        task = $(@).serializeArray()[0].value
-        id = $(@).parent().data 'id'
-      ajax.change $(@).parent().data "id"
+        newTask: $(@).serializeArray()[0].value
+        id: $(@).parent().parent().data "id"
+      ajax.change changedTask
     dblclick: (event) ->
       event.preventDefault()
       value = $(@).html()

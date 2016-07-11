@@ -25,9 +25,7 @@ namespace Tasklist.Controllers
         [HttpPost]
         public int Add(TaskTable newTask)
         {
-            newTask.Task = newTask.Task.Shorten();
-
-            if (ModelState.IsValid && newTask.Task != "")
+            if (ModelState.IsValid)
             {
                 newTask.IsActive = true;
                 db.TaskTables.Add(newTask);

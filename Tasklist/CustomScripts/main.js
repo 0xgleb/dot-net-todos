@@ -2,6 +2,16 @@
 (function() {
   var action, ajax;
 
+  String.Prototype.shorten = function() {
+    var i, j, ref, shorten, words;
+    words = this.split(' ');
+    shorten = words[0];
+    for (i = j = 1, ref = words.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+      shorten += words[i];
+    }
+    return shorten;
+  };
+
   ajax = {
     add: function(input) {
       return $.ajax('/Home/Add', {
@@ -26,13 +36,10 @@
         }
       });
     },
-    change: function(id) {
+    change: function(changedTask) {
       return $.ajax('/Home/Change', {
         type: "POST",
-        data: {
-          id: id,
-          task: $(this).serializeArray()[0]
-        },
+        data: changedTask,
         beforeSend: function() {},
         success: function(response) {
           return console.log(response);
@@ -63,17 +70,26 @@
   action = {
     add: {
       submit: function(event) {
+        var input;
         event.preventDefault();
-        ajax.add($('.editor-field input').val());
-        return $('.editor-field input').val('');
+        input = $('.editor-field input').val();
+        if (input) {
+          ajax.add(input.shorten);
+          return $('.editor-field input').val('');
+        } else {
+          return alert("Error! Invalid task!");
+        }
       }
     },
     change: {
       submit: function(event) {
+        var changedTask;
         event.preventDefault();
-        console.log($(this).parent().data('id'));
-        console.log($(this).serializeArray()[0]);
-        return ajax.change($(this).parent().data("id"));
+        changedTask = {
+          newTask: $(this).serializeArray()[0].value,
+          id: $(this).parent().parent().data("id")
+        };
+        return ajax.change(changedTask);
       },
       dblclick: function(event) {
         var html, value;
