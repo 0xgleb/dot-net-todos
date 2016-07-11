@@ -2,7 +2,7 @@
 (function() {
   var action, ajax;
 
-  String.Prototype.shorten = function() {
+  String.prototype.shorten = function() {
     var i, j, ref, shorten, words;
     words = this.split(' ');
     shorten = words[0];
@@ -72,9 +72,9 @@
       submit: function(event) {
         var input;
         event.preventDefault();
-        input = $('.editor-field input').val();
+        input = $('.editor-field input').val().shorten();
         if (input) {
-          ajax.add(input.shorten);
+          ajax.add(input);
           return $('.editor-field input').val('');
         } else {
           return alert("Error! Invalid task!");
@@ -98,12 +98,11 @@
         html = "<form autocomplete=\"off\" id=\"changing\"><input name=\"task\" type=\"text\" value=\"" + value + "\" autofocus/></form>";
         $(this).html(html);
         $(this).children('input').first().focus();
-        console.log('ID: ' + $(this).parent().data("id"));
         return $('#changing').on('submit', action.change.submit);
-      },
-      remove: {
-        click: function() {}
       }
+    },
+    remove: {
+      click: function() {}
     }
   };
 

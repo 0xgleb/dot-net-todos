@@ -5,7 +5,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Tasklist.Models;
-using Extensions;
 
 namespace Tasklist.Controllers
 {
@@ -38,18 +37,11 @@ namespace Tasklist.Controllers
         }
 
         [HttpPost]
-        public string Change(ChangedTask changedTask)
+        public int Change(ChangedTask changedTask)
         {
-            return changedTask.Id + ": " + changedTask.NewTask;
-            //changedTask.NewTask = changedTask.NewTask.Shorten();
-
-            //if(changedTask.NewTask != "")
-            //{
-            //    db.TaskTables.Find(changedTask.Id).Task = changedTask.NewTask;
-            //    db.SaveChanges();
-            //    return 1;
-            //}
-            //return -1;
+            db.TaskTables.Find(changedTask.Id).Task = changedTask.NewTask;
+            db.SaveChanges();
+            return 1;
         }
 
         public class ChangedTask

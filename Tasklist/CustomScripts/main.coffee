@@ -1,4 +1,4 @@
-String.Prototype.shorten = ->
+String.prototype.shorten = ->
   words = @split ' '
   shorten = words[0]
   shorten += words[i] for i in [1...words.length]
@@ -50,9 +50,9 @@ action =
   add:
     submit: (event) ->
       event.preventDefault()
-      input = $('.editor-field input').val()
+      input = $('.editor-field input').val().shorten()
       if input
-        ajax.add input.shorten
+        ajax.add input
         $('.editor-field input').val ''
       else
         alert "Error! Invalid task!"
@@ -68,15 +68,11 @@ action =
       value = $(@).html()
       html = "<form autocomplete=\"off\" id=\"changing\"><input name=\"task\" type=\"text\" value=\"#{value}\" autofocus/></form>"
       $(@).html html
-      # console.log $ @
-      # console.log $(@).children 'input'
-      # console.log $(@).children('input').first()
       $(@).children('input').first().focus()
-      console.log 'ID: ' + $(@).parent().data "id"
       $('#changing').on 'submit', action.change.submit
 
-    remove:
-      click: ->
+  remove:
+    click: ->
 
 $(document).on 'ready', ->
   $('#Task').focus()
