@@ -44,6 +44,13 @@ namespace Tasklist.Controllers
             return 1;
         }
 
+        public int Remove(int id)
+        {
+            db.Database.ExecuteSqlCommand("delete from TaskTable where Id=" + id);
+            db.SaveChanges();
+            return 1;
+        }
+
         public class ChangedTask
         {
             public int Id { get; set; }

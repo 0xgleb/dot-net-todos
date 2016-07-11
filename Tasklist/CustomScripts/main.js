@@ -5,11 +5,17 @@
   String.prototype.shorten = function() {
     var i, j, ref, shorten, words;
     words = this.split(' ');
-    shorten = words[0];
-    for (i = j = 1, ref = words.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
-      shorten += words[i];
+    if (words[0]) {
+      shorten = words[0];
+      for (i = j = 1, ref = words.length; 1 <= ref ? j < ref : j > ref; i = 1 <= ref ? ++j : --j) {
+        if (words[i]) {
+          shorten += ' ' + words[i];
+        }
+      }
+      return shorten;
+    } else {
+      return null;
     }
-    return shorten;
   };
 
   ajax = {
@@ -20,20 +26,15 @@
         beforeSend: function() {},
         success: function(response) {
           response = parseInt(response);
-          console.log(response);
-          if (response !== -1) {
-            return $('ul').append("<li data-id='" + response + "'><input type='checkbox' /><span>" + input + "</span>  <button>Remove</button></li>");
-          } else {
+          if (response === -1) {
             return alert("Error!");
+          } else {
+            return $('ul').last('li').attr(data - id, response);
           }
         },
         timeout: 3000,
-        error: function(request, errorType, errorMessage) {
-          return console.log("Error " + errorType + " with message: " + errorMessage + " [clientside]");
-        },
-        complete: function() {
-          return console.log("Loading finished! [clientside]");
-        }
+        error: ajax.error,
+        complete: function() {}
       });
     },
     change: function(changedTask) {
@@ -42,28 +43,41 @@
         data: changedTask,
         beforeSend: function() {},
         success: function(response) {
-          return console.log(response);
-
-          /*response = parseInt response
-          console.log response
-          if response != -1
-            console.log @
-            $(@).parent().html "#{$(@).serializeArray()[0]}"
-          else
-            alert "Error!"
-           */
+          response = parseInt(response);
+          console.log(response);
+          if (response === -1) {
+            console.log(this);
+            return alert("Error!");
+          }
         },
         timeout: 3000,
-        error: function(request, errorType, errorMessage) {
-          return console.log("Error " + errorType + " with message: " + errorMessage + " [clientside]");
+        error: ajax.error,
+        complete: function() {}
+      });
+    },
+    remove: function(id) {
+      return $.ajax('/Home/Remove', {
+        type: "POST",
+        data: id,
+        beforeSend: function() {},
+        success: function(response) {
+          response = parseInt(response);
+          if (response === -1) {
+            return alert('Error!');
+          } else {
+            return $(this).parent().remove();
+          }
         },
+        timeout: 3000,
+        error: ajax.error,
         complete: function() {
           return console.log("Loading finished! [clientside]");
         }
       });
     },
-    remove: function(id) {
-      return console.log('');
+    error: function(request, errorType, errorMessage) {
+      alert("Error! " + errorMessage + "!");
+      return console.log("Error \"" + errorType + "\": " + errorMessage + "!");
     }
   };
 
@@ -75,7 +89,8 @@
         input = $('.editor-field input').val().shorten();
         if (input) {
           ajax.add(input);
-          return $('.editor-field input').val('');
+          $('.editor-field input').val('');
+          return $('ul').append("<li><input type='checkbox' /><span>" + input + "</span>  <button>Remove</button></li>");
         } else {
           return alert("Error! Invalid task!");
         }
@@ -86,10 +101,15 @@
         var changedTask;
         event.preventDefault();
         changedTask = {
-          newTask: $(this).serializeArray()[0].value,
+          newTask: $(this).serializeArray()[0].value.shorten(),
           id: $(this).parent().parent().data("id")
         };
-        return ajax.change(changedTask);
+        if (changedTask.newTask) {
+          $(this).parent().html("" + changedTask.newTask);
+          return ajax.change(changedTask);
+        } else {
+          return alert('Error! Invalid task!');
+        }
       },
       dblclick: function(event) {
         var html, value;
@@ -102,7 +122,11 @@
       }
     },
     remove: {
-      click: function() {}
+      click: function() {
+        if (confirm('Are you sure?')) {
+          return ajax.remove($(this).parent().data('id'));
+        }
+      }
     }
   };
 
@@ -110,7 +134,8 @@
     $('#Task').focus();
     $('form').attr('autocomplete', 'off');
     $('form').first().on('submit', action.add.submit);
-    return $('li span').on('dblclick', action.change.dblclick);
+    $('li span').on('dblclick', action.change.dblclick);
+    return $('li').on('click', 'button', action.remove.click);
   });
 
 }).call(this);

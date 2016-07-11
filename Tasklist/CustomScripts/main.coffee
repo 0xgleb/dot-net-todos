@@ -1,8 +1,13 @@
 String.prototype.shorten = ->
   words = @split ' '
-  shorten = words[0]
-  shorten += words[i] for i in [1...words.length]
-  return shorten
+
+  if words[0]
+    shorten = words[0]
+    for i in [1...words.length]
+      shorten += ' ' + words[i] if words[i]
+    shorten
+  else
+    null
 
 ajax =
   add: (input)->
@@ -12,16 +17,13 @@ ajax =
       beforeSend: ->
       success: (response) ->
         response = parseInt response
-        console.log response
-        if response != -1
-          $('ul').append "<li data-id='#{response}'><input type='checkbox' /><span>#{input}</span>  <button>Remove</button></li>"
-        else
+        if response == -1
           alert "Error!"
+        else
+          $('ul').last('li').attr data-id, response
       timeout: 3000,
-      error: (request, errorType, errorMessage) ->
-        console.log "Error #{errorType} with message: #{errorMessage} [clientside]"
+      error: ajax.error
       complete: ->
-        console.log "Loading finished! [clientside]"
 
   change: (changedTask) ->
     $.ajax '/Home/Change',
@@ -29,22 +31,34 @@ ajax =
       data: changedTask
       beforeSend: ->
       success: (response) ->
+        response = parseInt response
         console.log response
-        ###response = parseInt response
-        console.log response
-        if response != -1
+        if response == -1
           console.log @
-          $(@).parent().html "#{$(@).serializeArray()[0]}"
-        else
-          alert "Error!" ###
+          alert "Error!"
       timeout: 3000
-      error: (request, errorType, errorMessage) ->
-        console.log "Error #{errorType} with message: #{errorMessage} [clientside]"
+      error: ajax.error
+      complete: ->
+
+  remove: (id) ->
+    $.ajax '/Home/Remove',
+      type: "POST"
+      data: id
+      beforeSend: ->
+      success: (response) ->
+        response = parseInt response
+        if response == -1
+          alert 'Error!'
+        else
+          $(@).parent().remove()
+      timeout: 3000
+      error: ajax.error
       complete: ->
         console.log "Loading finished! [clientside]"
 
-  remove: (id) ->
-    console.log ''
+  error: (request, errorType, errorMessage) ->
+    alert "Error! #{errorMessage}!"
+    console.log "Error \"#{errorType}\": #{errorMessage}!"
 
 action =
   add:
@@ -54,25 +68,35 @@ action =
       if input
         ajax.add input
         $('.editor-field input').val ''
+        $('ul').append "<li><input type='checkbox' /><span>#{input}</span>  <button>Remove</button></li>"
       else
         alert "Error! Invalid task!"
   change:
     submit: (event) ->
       event.preventDefault()
+
       changedTask =
-        newTask: $(@).serializeArray()[0].value
+        newTask: $(@).serializeArray()[0].value.shorten()
         id: $(@).parent().parent().data "id"
-      ajax.change changedTask
+      if changedTask.newTask
+        $(@).parent().html "#{changedTask.newTask}"
+        ajax.change changedTask
+      else
+        alert 'Error! Invalid task!'
     dblclick: (event) ->
       event.preventDefault()
+
       value = $(@).html()
       html = "<form autocomplete=\"off\" id=\"changing\"><input name=\"task\" type=\"text\" value=\"#{value}\" autofocus/></form>"
       $(@).html html
       $(@).children('input').first().focus()
+
       $('#changing').on 'submit', action.change.submit
 
   remove:
     click: ->
+      if confirm 'Are you sure?'
+        ajax.remove $(@).parent().data 'id'
 
 $(document).on 'ready', ->
   $('#Task').focus()
@@ -81,3 +105,5 @@ $(document).on 'ready', ->
   $('form').first().on 'submit', action.add.submit
 
   $('li span').on 'dblclick', action.change.dblclick
+
+  $('li').on 'click', 'button', action.remove.click
