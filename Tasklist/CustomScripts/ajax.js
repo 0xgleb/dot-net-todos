@@ -41,8 +41,8 @@
         });
       };
     })(this),
-    remove: function(id) {
-      return $.ajax('/Home/Remove', {
+    sendId: function(id, url) {
+      return $.ajax(url, {
         type: "POST",
         data: {
           id: id

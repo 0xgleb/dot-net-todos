@@ -61,6 +61,17 @@ namespace Tasklist.Controllers
             return 1;
         }
 
+        public int Done(int? id)
+        {
+            if (id == null)
+                return -2;
+
+            var task = db.TaskTables.Find(id);
+            task.IsActive = !task.IsActive;
+            db.SaveChanges();
+            return 1;
+        }
+
         public class ChangedTask
         {
             public int Id { get; set; }

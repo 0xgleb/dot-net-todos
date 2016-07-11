@@ -45,10 +45,14 @@
         var li;
         if (confirm('Are you sure?')) {
           li = $(this).parent();
-          modules.ajax.remove(parseInt(li.data('id')));
+          modules.ajax.sendId(parseInt(li.data('id')), '/Home/Remove');
           return li.remove();
         }
       }
+    },
+    check: function() {
+      console.log($(this).parent());
+      return modules.ajax.sendId(parseInt($(this).parent().data('id')), '/Home/Done');
     }
   };
 

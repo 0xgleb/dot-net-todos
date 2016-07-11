@@ -29,8 +29,8 @@ modules.ajax =
       error: @error
       complete: ->
 
-  remove: (id) ->
-    $.ajax '/Home/Remove',
+  sendId: (id, url) ->
+    $.ajax url,
       type: "POST"
       data: {id}
       beforeSend: ->

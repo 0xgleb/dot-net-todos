@@ -35,5 +35,8 @@ modules.action =
     click: ->
       if confirm 'Are you sure?'
         li = $(@).parent()
-        modules.ajax.remove parseInt li.data 'id'
+        modules.ajax.sendId parseInt(li.data('id')), '/Home/Remove'
         li.remove()
+  check: ->
+    console.log $(@).parent()
+    modules.ajax.sendId parseInt($(@).parent().data('id')), '/Home/Done'
