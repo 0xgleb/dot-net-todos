@@ -7,7 +7,8 @@
     $('li').on('dblclick', 'span', modules.action.change.dblclick);
     $('li').on('click', 'button', modules.action.remove.click);
     $('li').on('change', '.checkbox', modules.action.check);
-    return $('li').on('click', 'span', modules.action.check);
+    $('li').on('click', 'span', modules.action.check);
+    return $('select').on('change', modules.action.select);
   });
 
 }).call(this);

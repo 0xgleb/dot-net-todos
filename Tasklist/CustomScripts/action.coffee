@@ -19,8 +19,8 @@ modules.action =
       if changedTask.newTask
         $(@).parent().html "#{changedTask.newTask}"
         modules.ajax.change changedTask
-      else
-        alert 'Error! Invalid task!'
+      else if confirm 'Are you sure you want to remove this task?'
+        modules.ajax.remove changedTask.id
     dblclick: (event) ->
       event.preventDefault()
 
@@ -35,8 +35,33 @@ modules.action =
     click: ->
       if confirm 'Are you sure?'
         li = $(@).parent()
-        modules.ajax.sendId parseInt(li.data('id')), '/Home/Remove'
+        modules.ajax.remove parseInt li.data 'id'
         li.remove()
   check: ->
-    console.log $(@).parent()
-    modules.ajax.sendId parseInt($(@).parent().data('id')), '/Home/Done'
+    li = $(@).parent()
+    if parseInt(li.attr('class')) == 1
+      li.removeClass '1'
+      li.addClass '0'
+    else
+      li.removeClass '0'
+      li.addClass '1'
+
+    modules.action.select()
+    modules.ajax.changeStatus parseInt $(@).parent().data 'id'
+
+  select: =>
+    console.log @
+    modules.action.selectedOptions[$('select').val()]()
+
+  selectedOptions:
+    all: ->
+      console.log 'all'
+      $('.1, .0').show()
+    active: ->
+      console.log 'active'
+      $('.1').hide()
+      $('.0').show()
+    done: ->
+      console.log 'done'
+      $('.0').hide()
+      $('.1').show()

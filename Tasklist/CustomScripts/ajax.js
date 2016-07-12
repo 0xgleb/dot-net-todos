@@ -13,7 +13,8 @@
               return alert("Error!");
             } else {
               console.log('Should add attr');
-              return $('ul').children('li').last().attr('data-id', response);
+              $('ul').children('li').last().attr('data-id', response);
+              return $('ul').children('li').last().addClass('active');
             }
           },
           timeout: 3000,
@@ -64,6 +65,12 @@
           return console.log("Loading finished! [clientside]");
         }
       });
+    },
+    remove: function(id) {
+      return modules.ajax.sendId(id, '/Home/Remove');
+    },
+    changeStatus: function(id) {
+      return modules.ajax.sendId(id, '/Home/Done');
     },
     error: function(request, errorType, errorMessage) {
       alert("Error! " + errorMessage + "!");

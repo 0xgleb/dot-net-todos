@@ -11,6 +11,7 @@ modules.ajax =
         else
           console.log 'Should add attr'
           $('ul').children('li').last().attr 'data-id', response
+          $('ul').children('li').last().addClass 'active'
       timeout: 3000,
       error: @error
       complete: ->
@@ -46,6 +47,12 @@ modules.ajax =
       error: modules.ajax.error
       complete: ->
         console.log "Loading finished! [clientside]"
+
+  remove: (id) ->
+    modules.ajax.sendId id, '/Home/Remove'
+
+  changeStatus: (id) ->
+    modules.ajax.sendId id, '/Home/Done'
 
   error: (request, errorType, errorMessage) ->
     alert "Error! #{errorMessage}!"

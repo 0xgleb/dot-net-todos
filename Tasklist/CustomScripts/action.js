@@ -26,8 +26,8 @@
         if (changedTask.newTask) {
           $(this).parent().html("" + changedTask.newTask);
           return modules.ajax.change(changedTask);
-        } else {
-          return alert('Error! Invalid task!');
+        } else if (confirm('Are you sure you want to remove this task?')) {
+          return modules.ajax.remove(changedTask.id);
         }
       },
       dblclick: function(event) {
@@ -45,14 +45,45 @@
         var li;
         if (confirm('Are you sure?')) {
           li = $(this).parent();
-          modules.ajax.sendId(parseInt(li.data('id')), '/Home/Remove');
+          modules.ajax.remove(parseInt(li.data('id')));
           return li.remove();
         }
       }
     },
     check: function() {
-      console.log($(this).parent());
-      return modules.ajax.sendId(parseInt($(this).parent().data('id')), '/Home/Done');
+      var li;
+      li = $(this).parent();
+      if (parseInt(li.attr('class')) === 1) {
+        li.removeClass('1');
+        li.addClass('0');
+      } else {
+        li.removeClass('0');
+        li.addClass('1');
+      }
+      modules.action.select();
+      return modules.ajax.changeStatus(parseInt($(this).parent().data('id')));
+    },
+    select: (function(_this) {
+      return function() {
+        console.log(_this);
+        return modules.action.selectedOptions[$('select').val()]();
+      };
+    })(this),
+    selectedOptions: {
+      all: function() {
+        console.log('all');
+        return $('.1, .0').show();
+      },
+      active: function() {
+        console.log('active');
+        $('.1').hide();
+        return $('.0').show();
+      },
+      done: function() {
+        console.log('done');
+        $('.0').hide();
+        return $('.1').show();
+      }
     }
   };
 

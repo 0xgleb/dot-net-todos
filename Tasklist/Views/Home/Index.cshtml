@@ -20,10 +20,24 @@
         <input type="submit" value="Add" />
    </fieldset>
 }
+
+<select autocomplete="off">
+    <option value="all">All</option>
+    <option value="active">Active</option>
+    <option value="done">Completed</option>
+</select>
+
 <ul>
     @foreach (var task in Tasks)
     {
-        <li data-id="@task.Id"><input type="checkbox" autocomplete="off" class="checkbox" checked="@(!task.IsActive)"/><span>@task.Task</span>  <button>Remove</button></li>
+        if(task.IsActive)
+        {
+            <li class="1" data-id="@task.Id"><input type="checkbox" autocomplete="off" class="checkbox" checked="@(!task.IsActive)"/><span>@task.Task</span>  <button>Remove</button></li>
+        }
+        else
+        {
+            <li class="0" data-id="@task.Id"><input type="checkbox" autocomplete="off" class="checkbox" checked="@(!task.IsActive)"/><span>@task.Task</span>  <button>Remove</button></li>
+        }
     }
 </ul>
 
