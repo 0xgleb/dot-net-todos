@@ -4,9 +4,9 @@ modules.action =
       event.preventDefault()
       input = $('.editor-field input').val().shorten()
       if input
+        $('ul').append "<li class=\"1\"><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/><span>#{input}</span>  <button>Remove</button></li>"
         modules.ajax.add input
         $('.editor-field input').val ''
-        $('ul').append "<li><input type='checkbox' /><span>#{input}</span>  <button>Remove</button></li>"
       else
         alert "Error! Invalid task!"
   change:
@@ -50,7 +50,6 @@ modules.action =
     modules.ajax.changeStatus parseInt $(@).parent().data 'id'
 
   select: =>
-    console.log @
     modules.action.selectedOptions[$('select').val()]()
 
   selectedOptions:
@@ -59,9 +58,9 @@ modules.action =
       $('.1, .0').show()
     active: ->
       console.log 'active'
-      $('.1').hide()
-      $('.0').show()
-    done: ->
-      console.log 'done'
       $('.0').hide()
       $('.1').show()
+    done: ->
+      console.log 'done'
+      $('.1').hide()
+      $('.0').show()

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="b106eb672a054367b367c0955ada2425" Name="Diagram1">
+      <Diagram DiagramId="c7a6da56f0cc4b828e3c741f1c77120c" Name="Diagram1">
         <EntityTypeShape EntityType="TasksModel.TaskTable" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>

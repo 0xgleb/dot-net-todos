@@ -7,9 +7,9 @@
         event.preventDefault();
         input = $('.editor-field input').val().shorten();
         if (input) {
+          $('ul').append("<li class=\"1\"><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/><span>" + input + "</span>  <button>Remove</button></li>");
           modules.ajax.add(input);
-          $('.editor-field input').val('');
-          return $('ul').append("<li><input type='checkbox' /><span>" + input + "</span>  <button>Remove</button></li>");
+          return $('.editor-field input').val('');
         } else {
           return alert("Error! Invalid task!");
         }
@@ -65,7 +65,6 @@
     },
     select: (function(_this) {
       return function() {
-        console.log(_this);
         return modules.action.selectedOptions[$('select').val()]();
       };
     })(this),
@@ -76,13 +75,13 @@
       },
       active: function() {
         console.log('active');
-        $('.1').hide();
-        return $('.0').show();
+        $('.0').hide();
+        return $('.1').show();
       },
       done: function() {
         console.log('done');
-        $('.0').hide();
-        return $('.1').show();
+        $('.1').hide();
+        return $('.0').show();
       }
     }
   };

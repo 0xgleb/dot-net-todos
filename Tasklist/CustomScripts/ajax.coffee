@@ -1,6 +1,6 @@
 modules.ajax =
   add: (input) =>
-    $.ajax '/Home/Add',
+    $.ajax 'Home/Add',
       type: "POST"
       data: $('form').serialize()
       beforeSend: ->
@@ -9,21 +9,18 @@ modules.ajax =
         if response == -1
           alert "Error!"
         else
-          console.log 'Should add attr'
           $('ul').children('li').last().attr 'data-id', response
-          $('ul').children('li').last().addClass 'active'
       timeout: 3000,
       error: @error
       complete: ->
 
   change: (changedTask) =>
-    $.ajax '/Home/Change',
+    $.ajax 'Home/Change',
       type: "POST"
       data: changedTask
       beforeSend: ->
       success: (response) ->
         response = parseInt response
-        console.log response
         if response == -1
           alert "Error!"
       timeout: 3000
@@ -36,12 +33,10 @@ modules.ajax =
       data: {id}
       beforeSend: ->
       success: (response) ->
-        console.log response
         response = parseInt response
         if response == -1
           alert 'Error!'
         else
-          console.log $ @
           $(@).remove()
       timeout: 3000
       error: modules.ajax.error
@@ -49,10 +44,10 @@ modules.ajax =
         console.log "Loading finished! [clientside]"
 
   remove: (id) ->
-    modules.ajax.sendId id, '/Home/Remove'
+    modules.ajax.sendId id, 'Home/Remove'
 
   changeStatus: (id) ->
-    modules.ajax.sendId id, '/Home/Done'
+    modules.ajax.sendId id, 'Home/Done'
 
   error: (request, errorType, errorMessage) ->
     alert "Error! #{errorMessage}!"

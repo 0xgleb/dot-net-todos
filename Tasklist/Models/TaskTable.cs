@@ -17,5 +17,7 @@ namespace Tasklist.Models
         public int Id { get; set; }
         public string Task { get; set; }
         public bool IsActive { get; set; }
+        public Nullable<bool> IsPublic { get; set; }
+        public string Owner { get; set; }
     }
 }

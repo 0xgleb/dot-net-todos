@@ -3,7 +3,7 @@
   modules.ajax = {
     add: (function(_this) {
       return function(input) {
-        return $.ajax('/Home/Add', {
+        return $.ajax('Home/Add', {
           type: "POST",
           data: $('form').serialize(),
           beforeSend: function() {},
@@ -12,9 +12,7 @@
             if (response === -1) {
               return alert("Error!");
             } else {
-              console.log('Should add attr');
-              $('ul').children('li').last().attr('data-id', response);
-              return $('ul').children('li').last().addClass('active');
+              return $('ul').children('li').last().attr('data-id', response);
             }
           },
           timeout: 3000,
@@ -25,13 +23,12 @@
     })(this),
     change: (function(_this) {
       return function(changedTask) {
-        return $.ajax('/Home/Change', {
+        return $.ajax('Home/Change', {
           type: "POST",
           data: changedTask,
           beforeSend: function() {},
           success: function(response) {
             response = parseInt(response);
-            console.log(response);
             if (response === -1) {
               return alert("Error!");
             }
@@ -50,12 +47,10 @@
         },
         beforeSend: function() {},
         success: function(response) {
-          console.log(response);
           response = parseInt(response);
           if (response === -1) {
             return alert('Error!');
           } else {
-            console.log($(this));
             return $(this).remove();
           }
         },
@@ -67,10 +62,10 @@
       });
     },
     remove: function(id) {
-      return modules.ajax.sendId(id, '/Home/Remove');
+      return modules.ajax.sendId(id, 'Home/Remove');
     },
     changeStatus: function(id) {
-      return modules.ajax.sendId(id, '/Home/Done');
+      return modules.ajax.sendId(id, 'Home/Done');
     },
     error: function(request, errorType, errorMessage) {
       alert("Error! " + errorMessage + "!");

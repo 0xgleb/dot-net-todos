@@ -13,10 +13,10 @@ namespace Tasklist.Controllers
         private static TasksEntities db = new TasksEntities();
         private static List<TaskTable> Tasklist = (from x in db.TaskTables
                                                 select x).ToList<TaskTable>();
-
         [HttpGet]
         public ActionResult Index()
         {
+            ViewBag.UserName = User.Identity.Name;
             ViewBag.Tasks = Tasklist;
             return View();
         }
@@ -24,12 +24,19 @@ namespace Tasklist.Controllers
         [HttpPost]
         public int Add(TaskTable newTask)
         {
+            string userName = User.Identity.Name;
+
             if (ModelState.IsValid)
             {
+                newTask.Owner = userName;
+                newTask.IsPublic = true;
                 newTask.IsActive = true;
+
                 db.TaskTables.Add(newTask);
                 db.SaveChanges();
+
                 Tasklist.Add(newTask);
+
                 return newTask.Id;
             }
 
