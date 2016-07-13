@@ -6,10 +6,11 @@ modules.ajax =
       beforeSend: ->
       success: (response) ->
         response = parseInt response
+        console.log response
         if response == -1
           alert "Error!"
         else
-          $('ul').children('li').last().attr 'data-id', response
+          $('table').children('tr').last().attr 'data-id', response
       timeout: 3000,
       error: @error
       complete: ->

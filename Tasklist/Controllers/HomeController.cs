@@ -11,13 +11,12 @@ namespace Tasklist.Controllers
     public class HomeController : Controller
     {
         private static TasksEntities db = new TasksEntities();
-        private static List<TaskTable> Tasklist = (from x in db.TaskTables
-                                                select x).ToList<TaskTable>();
+
         [HttpGet]
         public ActionResult Index()
         {
             ViewBag.UserName = User.Identity.Name;
-            ViewBag.Tasks = Tasklist;
+            ViewBag.Tasks = db.TaskTables;
             return View();
         }
 
@@ -29,13 +28,10 @@ namespace Tasklist.Controllers
             if (ModelState.IsValid)
             {
                 newTask.Owner = userName;
-                newTask.IsPublic = true;
                 newTask.IsActive = true;
 
                 db.TaskTables.Add(newTask);
                 db.SaveChanges();
-
-                Tasklist.Add(newTask);
 
                 return newTask.Id;
             }
@@ -44,9 +40,9 @@ namespace Tasklist.Controllers
         }
 
         [HttpPost]
-        public int Change(ChangedTask changedTask)
+        public int Change(int Id, string NewTask)
         {
-            db.TaskTables.Find(changedTask.Id).Task = changedTask.NewTask;
+            db.TaskTables.Find(Id).Task = NewTask;
             db.SaveChanges();
             return 1;
         }
@@ -57,14 +53,13 @@ namespace Tasklist.Controllers
             if (id == null)
                 return -2;
 
-            var taskForDelete = db.TaskTables.Find(id);
+            var taskToDelete = db.TaskTables.Find(id);
 
-            if (taskForDelete == null)
+            if (taskToDelete == null)
                 return -1;
 
-            db.TaskTables.Remove(taskForDelete);
+            db.TaskTables.Remove(taskToDelete);
             db.SaveChanges();
-            Tasklist.RemoveAll(x => x.Id == id);
             return 1;
         }
 
@@ -77,12 +72,6 @@ namespace Tasklist.Controllers
             task.IsActive = !task.IsActive;
             db.SaveChanges();
             return 1;
-        }
-
-        public class ChangedTask
-        {
-            public int Id { get; set; }
-            public string NewTask { get; set; }
         }
     }
 }

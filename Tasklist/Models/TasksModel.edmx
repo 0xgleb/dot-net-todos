@@ -12,8 +12,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Task" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="IsPublic" Type="bit" />
-          <Property Name="Owner" Type="varchar" MaxLength="50" />
+          <Property Name="IsPublic" Type="bit" Nullable="false" />
+          <Property Name="Owner" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityContainer Name="TasksModelStoreContainer">
           <EntitySet Name="TaskTable" EntityType="Self.TaskTable" Schema="dbo" store:Type="Tables" />
@@ -30,8 +30,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Task" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="IsPublic" Type="Boolean" />
-          <Property Name="Owner" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsPublic" Type="Boolean" Nullable="false" />
+          <Property Name="Owner" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
         </EntityType>
         <EntityContainer Name="TasksEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TaskTables" EntityType="Self.TaskTable" />

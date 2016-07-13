@@ -24,53 +24,49 @@
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
 
-            <fieldset>
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Task)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.Task)
-                    @Html.ValidationMessageFor(model => model.Task)
-                </div>
-                <input type="submit" value="Add" />
-            </fieldset>
+            @Html.LabelFor(model => model.Task)
+            @Html.EditorFor(model => model.Task)
+            <p style="display: inline;">Public: </p>
+            @Html.EditorFor(model => model.IsPublic)
+            @Html.ValidationMessageFor(model => model.Task)
+            <input type="submit" value="Add" />
         }
 
         <select autocomplete="off">
             <option value="all">All</option>
             <option value="active">Active</option>
             <option value="done">Completed</option>
-        </select>
+        </select> <br />
 
-        <ul>
-            @foreach (var task in Tasks)
-            {
-                if (task.IsPublic || task.Owner == UserName)
+        <table>
+            <tbody>
+                <tr>
+                    <td>Status</td>
+                    <td>Task</td>
+                    <td>Owner</td>
+                </tr>
+                @foreach (var task in Tasks)
                 {
-                    if (task.IsActive)
+                    if (task.IsPublic || task.Owner == UserName)
                     {
-                        <li class="1" data-id="@task.Id">
-                            <input type="checkbox" autocomplete="off" class="checkbox" checked="@(!task.IsActive)" />
-                            <span>@task.Task</span>
-                             Owner: <span>@task.Owner</span>
-                            <button>Remove</button>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="0" data-id="@task.Id">
-                            <input type="checkbox" autocomplete="off" class="checkbox" checked="@(!task.IsActive)" />
-                            <span>@task.Task</span>
-                             Owner: <span>@task.Owner</span>
-                            <button>Remove</button>
-                        </li>
+                            <tr class="@Convert.ToInt32(task.IsActive)" data-id="@task.Id">
+                                <td><input type="checkbox" autocomplete="off" class="checkbox" checked="@(!task.IsActive)" /></td>
+                                <td><span class="task">@task.Task</span></td>
+                                <td><span>@task.Owner</span></td>
+                                <td><button>Remove</button></td>
+                                <td>@System.BoolExtensions.ToStatus(task.IsPublic)</td>
+                            </tr>
                     }
                 }
-            }
-        </ul>
-
+            </tbody>
+       </table>
+        
         <script src="~/CustomScripts/core.js"></script>
-        <script src="~/CustomScripts/shorten.js"></script>
+        <script>
+            modules.userName = '@UserName';
+            console.log('User name:' + modules.userName);
+        </script>
+        <script src="~/CustomScripts/extensions.js"></script>
         <script src="~/CustomScripts/ajax.js"></script>
         <script src="~/CustomScripts/action.js"></script>
         <script src="~/Scripts/jquery-1.8.2.js"></script>

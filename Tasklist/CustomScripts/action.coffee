@@ -2,11 +2,11 @@ modules.action =
   add:
     submit: (event) ->
       event.preventDefault()
-      input = $('.editor-field input').val().shorten()
+      input = $('#Task').val().shorten()
       if input
-        $('ul').append "<li class=\"1\"><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/><span>#{input}</span>  <button>Remove</button></li>"
+        $('table').append "<tr class=\"1\"><td><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/></td><td><span>#{input}</span></td><td>#{modules.userName}</td><td><button>Remove</button></td><td>#{(eval $('form').serializeArray()[2].value).toStatus()}</td></tr>"
         modules.ajax.add input
-        $('.editor-field input').val ''
+        $('#Task').val ''
       else
         alert "Error! Invalid task!"
   change:
@@ -15,12 +15,13 @@ modules.action =
 
       changedTask =
         newTask: $(@).serializeArray()[0].value.shorten()
-        id: $(@).parent().parent().data "id"
+        id: $(@).parent().parent().parent().data "id"
       if changedTask.newTask
         $(@).parent().html "#{changedTask.newTask}"
         modules.ajax.change changedTask
       else if confirm 'Are you sure you want to remove this task?'
         modules.ajax.remove changedTask.id
+        $(@).parent().parent().parent().remove()
     dblclick: (event) ->
       event.preventDefault()
 
@@ -34,20 +35,20 @@ modules.action =
   remove:
     click: ->
       if confirm 'Are you sure?'
-        li = $(@).parent()
-        modules.ajax.remove parseInt li.data 'id'
-        li.remove()
+        tr = $(@).parent().parent()
+        modules.ajax.remove parseInt tr.data 'id'
+        tr.remove()
   check: ->
-    li = $(@).parent()
-    if parseInt(li.attr('class')) == 1
-      li.removeClass '1'
-      li.addClass '0'
+    tr = $(@).parent().parent()
+    if parseInt(tr.attr('class')) == 1
+      tr.removeClass '1'
+      tr.addClass '0'
     else
-      li.removeClass '0'
-      li.addClass '1'
+      tr.removeClass '0'
+      tr.addClass '1'
 
     modules.action.select()
-    modules.ajax.changeStatus parseInt $(@).parent().data 'id'
+    modules.ajax.changeStatus parseInt tr.data 'id'
 
   select: =>
     modules.action.selectedOptions[$('select').val()]()

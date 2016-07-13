@@ -9,10 +9,11 @@
           beforeSend: function() {},
           success: function(response) {
             response = parseInt(response);
+            console.log(response);
             if (response === -1) {
               return alert("Error!");
             } else {
-              return $('ul').children('li').last().attr('data-id', response);
+              return $('table').children('tr').last().attr('data-id', response);
             }
           },
           timeout: 3000,

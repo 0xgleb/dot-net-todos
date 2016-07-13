@@ -5,11 +5,11 @@
       submit: function(event) {
         var input;
         event.preventDefault();
-        input = $('.editor-field input').val().shorten();
+        input = $('#Task').val().shorten();
         if (input) {
-          $('ul').append("<li class=\"1\"><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/><span>" + input + "</span>  <button>Remove</button></li>");
+          $('table').append("<tr class=\"1\"><td><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/></td><td><span>" + input + "</span></td><td>" + modules.userName + "</td><td><button>Remove</button></td><td>" + ((eval($('form').serializeArray()[2].value)).toStatus()) + "</td></tr>");
           modules.ajax.add(input);
-          return $('.editor-field input').val('');
+          return $('#Task').val('');
         } else {
           return alert("Error! Invalid task!");
         }
@@ -21,13 +21,14 @@
         event.preventDefault();
         changedTask = {
           newTask: $(this).serializeArray()[0].value.shorten(),
-          id: $(this).parent().parent().data("id")
+          id: $(this).parent().parent().parent().data("id")
         };
         if (changedTask.newTask) {
           $(this).parent().html("" + changedTask.newTask);
           return modules.ajax.change(changedTask);
         } else if (confirm('Are you sure you want to remove this task?')) {
-          return modules.ajax.remove(changedTask.id);
+          modules.ajax.remove(changedTask.id);
+          return $(this).parent().parent().parent().remove();
         }
       },
       dblclick: function(event) {
@@ -42,26 +43,26 @@
     },
     remove: {
       click: function() {
-        var li;
+        var tr;
         if (confirm('Are you sure?')) {
-          li = $(this).parent();
-          modules.ajax.remove(parseInt(li.data('id')));
-          return li.remove();
+          tr = $(this).parent().parent();
+          modules.ajax.remove(parseInt(tr.data('id')));
+          return tr.remove();
         }
       }
     },
     check: function() {
-      var li;
-      li = $(this).parent();
-      if (parseInt(li.attr('class')) === 1) {
-        li.removeClass('1');
-        li.addClass('0');
+      var tr;
+      tr = $(this).parent().parent();
+      if (parseInt(tr.attr('class')) === 1) {
+        tr.removeClass('1');
+        tr.addClass('0');
       } else {
-        li.removeClass('0');
-        li.addClass('1');
+        tr.removeClass('0');
+        tr.addClass('1');
       }
       modules.action.select();
-      return modules.ajax.changeStatus(parseInt($(this).parent().data('id')));
+      return modules.ajax.changeStatus(parseInt(tr.data('id')));
     },
     select: (function(_this) {
       return function() {

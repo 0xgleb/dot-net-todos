@@ -6,3 +6,11 @@ String.prototype.shorten = ->
     shorten += words[i] + ' ' if words[i]
   shorten = shorten.substring 0, shorten.length-1 if shorten.length
   shorten
+
+Boolean.prototype.toStatus = ->
+  if @ == true
+    console.log "Public"
+    "Public"
+  else
+    console.log "Private"
+    "Private"

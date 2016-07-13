@@ -15,4 +15,14 @@
     return shorten;
   };
 
+  Boolean.prototype.toStatus = function() {
+    if (this === true) {
+      console.log("Public");
+      return "Public";
+    } else {
+      console.log("Private");
+      return "Private";
+    }
+  };
+
 }).call(this);
