@@ -9,11 +9,11 @@
           beforeSend: function() {},
           success: function(response) {
             response = parseInt(response);
-            console.log(response);
             if (response === -1) {
               return alert("Error!");
             } else {
-              return $('table').children('tr').last().attr('data-id', response);
+              $('table').find('tbody').children('tr').last().attr('data-id', response);
+              return modules.page.reloadEventListeners();
             }
           },
           timeout: 3000,
@@ -57,9 +57,7 @@
         },
         timeout: 3000,
         error: modules.ajax.error,
-        complete: function() {
-          return console.log("Loading finished! [clientside]");
-        }
+        complete: function() {}
       });
     },
     remove: function(id) {

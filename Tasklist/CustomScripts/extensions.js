@@ -16,13 +16,28 @@
   };
 
   Boolean.prototype.toStatus = function() {
-    if (this === true) {
+    if (this.valueOf()) {
       console.log("Public");
       return "Public";
     } else {
       console.log("Private");
       return "Private";
     }
+  };
+
+  String.prototype.toLegal = function() {
+    var converters;
+    converters = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': '&quot;',
+      "'": '&#39;',
+      "/": '&#x2F;'
+    };
+    return String(this).replace(/[&<>"'\/]/g, function(s) {
+      return converters[s];
+    });
   };
 
 }).call(this);

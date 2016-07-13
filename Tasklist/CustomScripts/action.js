@@ -5,9 +5,11 @@
       submit: function(event) {
         var input;
         event.preventDefault();
+        console.log('called');
         input = $('#Task').val().shorten();
         if (input) {
-          $('table').append("<tr class=\"1\"><td><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/></td><td><span>" + input + "</span></td><td>" + modules.userName + "</td><td><button>Remove</button></td><td>" + ((eval($('form').serializeArray()[2].value)).toStatus()) + "</td></tr>");
+          input = input.toLegal();
+          $('table').append("<tr class=\"1\"><td><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/></td><td><span class=\"task\">" + input + "</span></td><td>" + modules.userName + "</td><td><button class=\"remove\">Remove</button></td><td>" + ((eval($('form').serializeArray()[2].value)).toStatus()) + "</td></tr>");
           modules.ajax.add(input);
           return $('#Task').val('');
         } else {
@@ -24,6 +26,7 @@
           id: $(this).parent().parent().parent().data("id")
         };
         if (changedTask.newTask) {
+          changedTask.newTask = changedTask.newTask.toLegal();
           $(this).parent().html("" + changedTask.newTask);
           return modules.ajax.change(changedTask);
         } else if (confirm('Are you sure you want to remove this task?')) {
@@ -71,16 +74,13 @@
     })(this),
     selectedOptions: {
       all: function() {
-        console.log('all');
         return $('.1, .0').show();
       },
       active: function() {
-        console.log('active');
         $('.0').hide();
         return $('.1').show();
       },
       done: function() {
-        console.log('done');
         $('.1').hide();
         return $('.0').show();
       }

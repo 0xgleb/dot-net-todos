@@ -6,11 +6,11 @@ modules.ajax =
       beforeSend: ->
       success: (response) ->
         response = parseInt response
-        console.log response
         if response == -1
           alert "Error!"
         else
-          $('table').children('tr').last().attr 'data-id', response
+          $('table').find('tbody').children('tr').last().attr 'data-id', response
+          modules.page.reloadEventListeners()
       timeout: 3000,
       error: @error
       complete: ->
@@ -42,7 +42,6 @@ modules.ajax =
       timeout: 3000
       error: modules.ajax.error
       complete: ->
-        console.log "Loading finished! [clientside]"
 
   remove: (id) ->
     modules.ajax.sendId id, 'Home/Remove'

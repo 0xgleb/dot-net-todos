@@ -2,9 +2,11 @@ modules.action =
   add:
     submit: (event) ->
       event.preventDefault()
+      console.log 'called'
       input = $('#Task').val().shorten()
       if input
-        $('table').append "<tr class=\"1\"><td><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/></td><td><span>#{input}</span></td><td>#{modules.userName}</td><td><button>Remove</button></td><td>#{(eval $('form').serializeArray()[2].value).toStatus()}</td></tr>"
+        input = input.toLegal()
+        $('table').append "<tr class=\"1\"><td><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/></td><td><span class=\"task\">#{input}</span></td><td>#{modules.userName}</td><td><button class=\"remove\">Remove</button></td><td>#{(eval $('form').serializeArray()[2].value).toStatus()}</td></tr>"
         modules.ajax.add input
         $('#Task').val ''
       else
@@ -17,6 +19,7 @@ modules.action =
         newTask: $(@).serializeArray()[0].value.shorten()
         id: $(@).parent().parent().parent().data "id"
       if changedTask.newTask
+        changedTask.newTask = changedTask.newTask.toLegal()
         $(@).parent().html "#{changedTask.newTask}"
         modules.ajax.change changedTask
       else if confirm 'Are you sure you want to remove this task?'
@@ -55,13 +58,10 @@ modules.action =
 
   selectedOptions:
     all: ->
-      console.log 'all'
       $('.1, .0').show()
     active: ->
-      console.log 'active'
       $('.0').hide()
       $('.1').show()
     done: ->
-      console.log 'done'
       $('.1').hide()
       $('.0').show()
