@@ -6,7 +6,7 @@
         var input;
         event.preventDefault();
         input = $('#Task').val().shorten();
-        if (input && input.toLegal().length < 50) {
+        if (input && input.toLegal().length) {
           input = input.toLegal();
           $('table').append("<tr class=\"1\"><td><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/></td><td><span class=\"task\">" + input + "</span></td><td>" + modules.userName + "</td><td>" + ((eval($('form').serializeArray()[2].value)).toStatus()) + "</td><td><button class=\"remove btn btn-default btn-sm\">X</button></td></tr>");
           console.log(input.length);
@@ -22,11 +22,12 @@
         var changedTask;
         event.preventDefault();
         changedTask = {
-          newTask: $(this).serializeArray()[0].value.shorten(),
+          newTask: $(this).serializeArray()[0].value.shorten().toLegal(),
           id: $(this).parent().parent().parent().data("id")
         };
         if (changedTask.newTask) {
-          changedTask.newTask = changedTask.newTask.toLegal();
+          console.log(changedTask.newTask);
+          changedTask.newTask = changedTask.newTask;
           $(this).parent().html("" + changedTask.newTask);
           return modules.ajax.change(changedTask);
         } else if (confirm('Are you sure you want to remove this task?')) {

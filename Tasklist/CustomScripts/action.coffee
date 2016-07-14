@@ -3,7 +3,7 @@ modules.action =
     submit: (event) ->
       event.preventDefault()
       input = $('#Task').val().shorten()
-      if input && input.toLegal().length < 50
+      if input && input.toLegal().length
         input = input.toLegal()
         $('table').append "<tr class=\"1\"><td><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/></td><td><span class=\"task\">#{input}</span></td><td>#{modules.userName}</td><td>#{(eval $('form').serializeArray()[2].value).toStatus()}</td><td><button class=\"remove btn btn-default btn-sm\">X</button></td></tr>"
         console.log input.length
@@ -16,10 +16,11 @@ modules.action =
       event.preventDefault()
 
       changedTask =
-        newTask: $(@).serializeArray()[0].value.shorten()
+        newTask: $(@).serializeArray()[0].value.shorten().toLegal()
         id: $(@).parent().parent().parent().data "id"
       if changedTask.newTask
-        changedTask.newTask = changedTask.newTask.toLegal()
+        console.log changedTask.newTask
+        changedTask.newTask = changedTask.newTask
         $(@).parent().html "#{changedTask.newTask}"
         modules.ajax.change changedTask
       else if confirm 'Are you sure you want to remove this task?'

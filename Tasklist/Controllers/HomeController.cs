@@ -40,11 +40,11 @@ namespace Tasklist.Controllers
         }
 
         [HttpPost]
-        public int Change(int Id, string NewTask)
+        public string Change(int Id, string NewTask)
         {
             db.TaskTables.Find(Id).Task = NewTask;
             db.SaveChanges();
-            return 1;
+            return NewTask;
         }
 
         [HttpPost]
