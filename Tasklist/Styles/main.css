@@ -1,0 +1,59 @@
+body
+{
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background-color: rgb(234, 234, 234);
+}
+
+form
+{
+  display: inline;
+}
+
+form, table, select
+{
+  margin: 0 auto;
+}
+
+select
+{
+  display: block;
+}
+
+#inputs, h1, select
+{
+  text-align: center;
+}
+
+#Task
+{
+  width: 200px;
+}
+
+h1
+{
+  font-weight: bolder;
+}
+
+#list
+{
+  margin-top: 20px;
+}
+
+input[type="checkbox"]
+{
+  border: 0;
+  box-shadow: 0;
+}
+
+/*
+button
+{
+  border-radius: 40%;
+  border: 0;
+  font-size: 14px;
+  color: hsla(0, 100%, 50%, 0.76);
+  background-color: hsla(0, 0, 0, 0);
+  font-weight: bolder;
+}*/

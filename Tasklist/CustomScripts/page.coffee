@@ -1,8 +1,11 @@
 modules.page =
   init: ->
-    console.log modules.userName
     $('#Task').focus()
+    .attr 'placeholder', 'What needs to be done?'
+    .addClass 'form-control'
     $('form').attr 'autocomplete', 'off'
+    .addClass 'form-inline'
+
     $('form').first().on 'submit', modules.action.add.submit
     $('select').on 'change', modules.action.select
 

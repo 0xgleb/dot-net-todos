@@ -6,7 +6,7 @@ modules.action =
       input = $('#Task').val().shorten()
       if input
         input = input.toLegal()
-        $('table').append "<tr class=\"1\"><td><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/></td><td><span class=\"task\">#{input}</span></td><td>#{modules.userName}</td><td><button class=\"remove\">Remove</button></td><td>#{(eval $('form').serializeArray()[2].value).toStatus()}</td></tr>"
+        $('table').append "<tr class=\"1\"><td><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/></td><td><span class=\"task\">#{input}</span></td><td>#{modules.userName}</td><td>#{(eval $('form').serializeArray()[2].value).toStatus()}</td><td><button class=\"remove btn btn-default btn-sm\">X</button></td></tr>"
         modules.ajax.add input
         $('#Task').val ''
       else
@@ -29,7 +29,7 @@ modules.action =
       event.preventDefault()
 
       value = $(@).html()
-      html = "<form autocomplete=\"off\" id=\"changing\"><input name=\"task\" type=\"text\" value=\"#{value}\" autofocus/></form>"
+      html = "<form class=\"form-inline\" autocomplete=\"off\" id=\"changing\"><input name=\"task\" type=\"text\" value=\"#{value}\" autofocus class=\"form-control\"/></form>"
       $(@).html html
       $(@).children('input').first().focus()
 
@@ -37,10 +37,9 @@ modules.action =
 
   remove:
     click: ->
-      if confirm 'Are you sure?'
-        tr = $(@).parent().parent()
-        modules.ajax.remove parseInt tr.data 'id'
-        tr.remove()
+      tr = $(@).parent().parent()
+      modules.ajax.remove parseInt tr.data 'id'
+      tr.remove()
   check: ->
     tr = $(@).parent().parent()
     if parseInt(tr.attr('class')) == 1

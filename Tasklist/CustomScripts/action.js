@@ -9,7 +9,7 @@
         input = $('#Task').val().shorten();
         if (input) {
           input = input.toLegal();
-          $('table').append("<tr class=\"1\"><td><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/></td><td><span class=\"task\">" + input + "</span></td><td>" + modules.userName + "</td><td><button class=\"remove\">Remove</button></td><td>" + ((eval($('form').serializeArray()[2].value)).toStatus()) + "</td></tr>");
+          $('table').append("<tr class=\"1\"><td><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/></td><td><span class=\"task\">" + input + "</span></td><td>" + modules.userName + "</td><td>" + ((eval($('form').serializeArray()[2].value)).toStatus()) + "</td><td><button class=\"remove btn btn-default btn-sm\">X</button></td></tr>");
           modules.ajax.add(input);
           return $('#Task').val('');
         } else {
@@ -38,7 +38,7 @@
         var html, value;
         event.preventDefault();
         value = $(this).html();
-        html = "<form autocomplete=\"off\" id=\"changing\"><input name=\"task\" type=\"text\" value=\"" + value + "\" autofocus/></form>";
+        html = "<form class=\"form-inline\" autocomplete=\"off\" id=\"changing\"><input name=\"task\" type=\"text\" value=\"" + value + "\" autofocus class=\"form-control\"/></form>";
         $(this).html(html);
         $(this).children('input').first().focus();
         return $('#changing').on('submit', modules.action.change.submit);
@@ -47,11 +47,9 @@
     remove: {
       click: function() {
         var tr;
-        if (confirm('Are you sure?')) {
-          tr = $(this).parent().parent();
-          modules.ajax.remove(parseInt(tr.data('id')));
-          return tr.remove();
-        }
+        tr = $(this).parent().parent();
+        modules.ajax.remove(parseInt(tr.data('id')));
+        return tr.remove();
       }
     },
     check: function() {

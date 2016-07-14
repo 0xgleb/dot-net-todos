@@ -15,36 +15,41 @@
     <head>
         <title>Tasklist</title>
         <meta charset="utf-8" />
-        @*<link href="Styles/bootstrap.min.css" rel="stylesheet" />*@
+        <link href="Styles/bootstrap.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="Styles/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="Styles/main.css">
         <base href="@baseUrl" />
     </head>
     <body>
+      <h1>Todos: </h1>
+      <div id="inputs">
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true)
 
-            @Html.LabelFor(model => model.Task)
             @Html.EditorFor(model => model.Task)
+            <div class="checkbox">
+            <label class="checkbox-inline">
             <p style="display: inline;">Public: </p>
             @Html.EditorFor(model => model.IsPublic)
+            </label>
+            </div>
             @Html.ValidationMessageFor(model => model.Task)
-            <input type="submit" value="Add" />
         }
+      </div>
 
-        <select autocomplete="off">
-            <option value="all">All</option>
-            <option value="active">Active</option>
-            <option value="done">Completed</option>
-        </select> <br />
-
-        <table>
-            <tbody>
+      <div id="list">
+        <table class="table">
+            <thead class="thead-inverse">
                 <tr>
-                    <td>Status</td>
-                    <td>Task</td>
-                    <td>Owner</td>
+                    <th>Status</th>
+                    <th>Task</th>
+                    <th>Owner</th>
+                    <th>Access</th>
                 </tr>
+            </thead>
+            <tbody>
                 @foreach (var task in Tasks)
                 {
                     if (task.IsPublic || task.Owner == UserName)
@@ -53,14 +58,21 @@
                                 <td><input type="checkbox" autocomplete="off" class="checkbox" checked="@(!task.IsActive)" /></td>
                                 <td><span class="task">@task.Task</span></td>
                                 <td>@task.Owner</td>
-                                <td><button class="remove">Remove</button></td>
                                 <td>@System.BoolExtensions.ToStatus(task.IsPublic)</td>
+                                <td><button class="remove btn btn-default btn-sm">X</button></td>
                             </tr>
                     }
                 }
             </tbody>
        </table>
-        
+        <select autocomplete="off" class="form-control form-inline">
+            <option value="all">All</option>
+            <option value="active">Active</option>
+            <option value="done">Completed</option>
+        </select>
+     </div>
+
+
         <script src="~/Scripts/jquery-1.8.2.js"></script>
         <script src="~/CustomScripts/core.js"></script>
         <script src="~/CustomScripts/extensions.js"></script>
