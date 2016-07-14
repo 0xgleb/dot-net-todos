@@ -21,6 +21,12 @@ select
   display: block;
 }
 
+.task
+{
+  max-width: 300px;
+  overflow: scroll;
+}
+
 #inputs, h1, select
 {
   text-align: center;

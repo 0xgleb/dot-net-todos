@@ -2,11 +2,11 @@ modules.action =
   add:
     submit: (event) ->
       event.preventDefault()
-      console.log 'called'
       input = $('#Task').val().shorten()
-      if input
+      if input && input.toLegal().length < 50
         input = input.toLegal()
         $('table').append "<tr class=\"1\"><td><input type='checkbox' class=\"checkbox\" autocomplete=\"off\"/></td><td><span class=\"task\">#{input}</span></td><td>#{modules.userName}</td><td>#{(eval $('form').serializeArray()[2].value).toStatus()}</td><td><button class=\"remove btn btn-default btn-sm\">X</button></td></tr>"
+        console.log input.length
         modules.ajax.add input
         $('#Task').val ''
       else
